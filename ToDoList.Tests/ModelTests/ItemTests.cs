@@ -1,17 +1,30 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Namespace;
+using ToDoList.Models;
 
-namespace Template.Tests
+namespace ToDoList.Tests
 {
   [TestClass]
-  public class Classname
+  public class ItemTests
   {
     [TestMethod]
-    public void NameOfMethodWeAreTesting_DescriptionOfBehavior_ExpectedReturnValue()
+    public void ItemConstructor_CreateInstanceOfItem_Item()
     {
-      //Example: LeapYear testLeapYear = new LeapYear();
-      Assert.AreEqual(ExpectedResult, CodeToTest);
-      //Example CodeToTest: testLeapYear.IsLeapYear(2020)
+      Item newItem = new Item();
+      Assert.AreEqual(typeof(Item), newItem.GetType());
+    }
+
+    [TestMethod]
+    public void GetDescription_ReturnsDescription_String()
+    {
+      //Arrange
+      string description = "Walk the dog.";
+      Item newItem = new Item(description);
+
+      //Act
+      string result = newItem.Description;
+      
+      //Assert
+      Assert.AreEqual(description, result);
     }
   }
 }
