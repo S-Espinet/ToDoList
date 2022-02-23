@@ -1,22 +1,24 @@
+using System.Collections.Generic;
+
 namespace ToDoList.Models
 {
   public class Item
   {
-    //Example:
-//     public bool IsLeapYear(int year)
-//     {
-//       if (year % 400 == 0)
-//       {
-//         return true;
-//       }
-//       else if (year % 100 == 0)
-//       {
-//         return false;
-//       }
-//       else
-//       {
-//         return year % 4 == 0;
-//       }
-//     }
+    public string Description { get; set ;}
+    private static List<Item> _instances = new List<Item>{};
+    public static List<Item> GetAll()
+    {
+      return _instances;
+    }
+    public static void ClearAll()
+    {
+      _instances.Clear();
+    }
+    
+    public Item (string description)
+    {
+      Description = description;
+      _instances.Add(this);
+    }
   }
 }
