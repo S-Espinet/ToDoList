@@ -3,7 +3,8 @@ using ToDoList.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ToDoList{
+namespace ToDoList
+{
   public class Program
   {
     public static void Main()
@@ -23,10 +24,10 @@ namespace ToDoList{
         }
         else if (decision == "VIEW")
         {
-           foreach (Item task in Item.GetAll())
-           {
+          foreach (Item task in Item.GetAll())
+          {
             Console.WriteLine(task.Description);
-           }
+          }
         }
         else if (decision == "CLEAR")
         {
