@@ -5,7 +5,9 @@ namespace ToDoList.Models
   public class Item
   {
     public string Description { get; set ;}
-    public int Priority { get; set; }
+
+    public int Id { get; }
+    //public int Priority { get; set; }
     private static List<Item> _instances = new List<Item>{};
     
     //Methods
@@ -23,12 +25,13 @@ namespace ToDoList.Models
     {
       Description = description;
       _instances.Add(this); //add yourself to home we all share, like a baby being born - like Korokmen sharing a tree home
+      Id = _instances.Count;
     }
-    public Item (string description, int priority)
-      : this(description)
-      {
-        Priority = priority;
-      }
+    // public Item (string description, int priority)
+    //   : this(description)
+    //   {
+    //     Priority = priority;
+    //   }
   }
 }
 
