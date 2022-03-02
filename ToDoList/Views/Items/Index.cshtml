@@ -19,7 +19,9 @@
       }
     </ul>
     <a href="/items/new">Add a new item.</a>
+    //href links are get methods - they go to another cshtml page, like displaying a form you can fill out, but not necessarily; they can just display something - to find out which one, you go to the controllers, and find the route that matches
     <form action="/items/delete" method="post">
+    //actions, which have to live inside forms, are post methods, they take you somewhere, even if it's to the same page, after changing something/performing an action - check controllers routes that match to see which page
       <button type="submit" name="button">Clear All Items</button>
     </form>
   </body>
