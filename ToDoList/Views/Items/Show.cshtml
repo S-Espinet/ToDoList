@@ -8,9 +8,13 @@
   <body>
     <h1>To Do List Item Details: </h1>
 
-    <h2>@Model.Description</h2>
+    <h2>@Model["item"].Description</h2>
+    <h3>Category: @Model["category"].Name</h3>
+    <!--square brackets refer to our dictionary, and we include the second line here to let the user know which category the displayed item belongs to-->
 
-    <a href='/items/new'>Add another item</a> 
-    <a href='/items'>View all items</a>
+    <a href='/categories/@Model["category"].Id/items/new'>Add another item</a>
+    <a href='/categories'>View all categories</a>
+    <!--we view all categories, not items, since we no longer have a page that lists all items - items only exist inside their categories now-->
+
   </body>
 </html>

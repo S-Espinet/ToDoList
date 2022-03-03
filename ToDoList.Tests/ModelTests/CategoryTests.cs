@@ -7,6 +7,7 @@ namespace ToDoList.Tests
 {
   [TestClass]
   public class CategoryTests : IDisposable
+  //the I in IDisposable stands for interface
   {
     public void Dispose()
     {
