@@ -54,6 +54,8 @@ namespace ToDoList.Controllers
       //using the id from above, we have to find the category object that we're adding the item to
       Item newItem = new Item(itemDescription);
       //the line above is from the user's input in the form
+      newItem.Save();
+      //this line saves to database
       foundCategory.AddItem(newItem);
       List<Item> categoryItems = foundCategory.Items;
       //the view requires all of the items in this list because when it renders, it displays all of the items in the list that belongs to this category
