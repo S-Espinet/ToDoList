@@ -1,38 +1,42 @@
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ToDoList.Controllers
 {
   public class ItemsController : Controller
   {
+    private readonly ToDoListContext _db;
 
-  [HttpGet("/categories/{categoryId}/items/new")]
-  //we need the category because you can't create a new item without first creating its category
-  public ActionResult New(int categoryId)
-  {
-     Category category = Category.Find(categoryId);
-     return View(category);
-  }
-
-    [HttpGet("/categories/{categoryId}/items/{itemId}")]
-    //includes category information because items are now inside categories; we can locate the parent and child objects since they both have ids, and pass them to our dictionary
-    public ActionResult Show(int categoryId, int itemId)
+    public ItemsController(ToDoListContext db)
     {
-      Item item = Item.Find(itemId);
-      Category category = Category.Find(categoryId);
-      Dictionary<string, object> model = new Dictionary<string, object>();
-      model.Add("item", item);
-      model.Add("category", category);
+      _db = db;
+    }
+
+    public ActionResult Index()
+    {
+      List<Item> model = _db.Items.ToList();
       return View(model);
     }
 
-
-    [HttpPost("/items/delete")]
-    public ActionResult DeleteAll()
+    public ActionResult Create()
     {
-      Item.ClearAll();
       return View();
+    }
+
+    [HttpPost]
+    public ActionResult Create(Item item)
+    {
+      _db.Items.Add(item);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult Details(int id)
+    {
+      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      return View(thisItem);
     }
   }
 }
