@@ -8,6 +8,7 @@ namespace ToDoList.Controllers
       [HttpGet("/")]
       public ActionResult Index()
       {
+        ViewBag.PageTitle = "Welcome to the To-Do List";
         return View();
       }
     }
