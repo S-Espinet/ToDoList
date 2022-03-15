@@ -20,7 +20,7 @@ namespace ToDoList.Controllers
     public ActionResult Index()
     {
       ViewBag.PageTitle = "View All Items";
-      return View(_db.Items.ToList());
+      return View(_db.Items.OrderBy(item => item.DueDate.Day).ToList());
     }
 
     [HttpPost]

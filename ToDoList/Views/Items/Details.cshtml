@@ -37,6 +37,10 @@ else
       <p>This item has been completed.</p>
     }
   </h4>
+
+  <h4>DueDate
+    @Html.HiddenFor(model => model.ItemId)
+    @Html.DisplayFor(model => model.DueDate.Day)/@Html.DisplayFor(model => model.DueDate.Month)/@Html.DisplayFor(model => model.DueDate.Year)  </h4>
 }
 <p>@Html.ActionLink("Back to list", "Index")</p>
 <p>@Html.ActionLink("Edit Item", "Edit", new { id = Model.ItemId })</p>

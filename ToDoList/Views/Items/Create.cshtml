@@ -8,8 +8,11 @@
 @using (Html.BeginForm())
 {
   @Html.LabelFor(model => model.Description)
-  @Html.TextBoxFor(model => model.Description)
-
+  @Html.TextBoxFor(model => model.Description, new { required = "required"})
+  <br />
+  @Html.LabelFor(model => model.DueDate)
+  @Html.TextBoxFor(model => model.DueDate, new { type = "date" })
+  <br />
   @Html.Label("Select category")
   @Html.DropDownList("CategoryId")
   <input type="submit" value="Add new task" class="btn btn-default" />
