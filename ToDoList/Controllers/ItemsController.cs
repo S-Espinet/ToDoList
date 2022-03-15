@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Models;
@@ -20,6 +21,32 @@ namespace ToDoList.Controllers
     {
       ViewBag.PageTitle = "View All Items";
       return View(_db.Items.ToList());
+    }
+
+    [HttpPost]
+    public ActionResult Index (List<Item> myItems)
+    {
+      Console.WriteLine("Hello");
+      Console.WriteLine("myItems count: {0}", myItems.Count);
+      foreach(var newItem in myItems)
+      {
+        Console.WriteLine("newItem ItemId: {0}", newItem.ItemId);
+        Console.WriteLine("newItem Completed: {0}", newItem.Completed);
+        var dbItemMatch =_db.Items.FirstOrDefault(dbItem => dbItem.ItemId == newItem.ItemId);
+        if(dbItemMatch != null)
+        {
+          Console.WriteLine("dbItemMatch ItemId: {0}", dbItemMatch.ItemId);
+          //_db.Items.Attach(dbItemMatch);
+          dbItemMatch.Completed = newItem.Completed;
+          //_db.Entry(dbItemMatch).State = EntityState.Modified;  
+        }    
+        else
+        {
+          Console.WriteLine("No match");
+        }
+      }
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
 
     public ActionResult Create()
@@ -60,7 +87,7 @@ namespace ToDoList.Controllers
     [HttpPost]
     public ActionResult Edit (Item item, int CategoryId)
     {
-      if (CategoryId != 0)
+      if (CategoryId != 0) 
       {
         _db.CategoryItem.Add(new CategoryItem() { CategoryId = CategoryId, ItemId = item.ItemId });
       }

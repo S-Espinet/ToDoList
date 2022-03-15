@@ -11,13 +11,32 @@
 {
   <h3>No items have been added yet!</h3>
 }
-
+@using (Html.BeginForm())
+{
 <ul>
-  @foreach(Item item in Model)
+  @for(int i = 0; i < Model.Count; i++)
   {
-    <li>@Html.CheckBoxFor(model => item.Completed) @Html.ActionLink($"{item.Description}", "Details", new { id = item.ItemId })</li>
+
+    <li>
+        @Html.HiddenFor(x => x[i].ItemId)
+        @Html.HiddenFor(x => x[i].Description)
+        @Html.CheckBoxFor(x => x[i].Completed)
+        @Html.ActionLink($"{Model[i].Description}", "Details", new { id = Model[i].ItemId })
+                
+        @* @Html.CheckBoxFor(x => Model[i].Completed)
+        @Html.Hidden("ItemId", $"{Model[i].ItemId}")
+        @Html.Label("Description", $"{Model[i].Description}")
+        @Html.ActionLink($"{Model[i].Description}", "Details", new { id = Model[i].ItemId }) 
+
+        @Html.CheckBoxFor($"{Model[i].Completed}")
+        @Html.Label($"{Model[i].ItemId}")
+        @Html.ActionLink($"{Model[i].Description}", "Details", new { id = Model[i].ItemId }) *@
+    </li>
   }
 </ul>
+
+  <input type="submit" value="Save" />
+}
 
 <p>@Html.ActionLink("Add new item", "Create")</p>
 <p>@Html.ActionLink("Home", "Index", "Home")</p>

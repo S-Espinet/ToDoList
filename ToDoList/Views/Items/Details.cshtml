@@ -24,7 +24,17 @@ else
           <input type="submit" value="Delete"/>
         }
       }
-    </ul>
+  </h4>
+  <br />
+  <h4>Completion status
+    @if (Model.Completed == false)
+    {
+      <p>This item has not been completed.</p>
+    }
+    else
+    {
+      <p>This item has been completed.</p>
+    }
   </h4>
 }
 <p>@Html.ActionLink("Back to list", "Index")</p>
