@@ -2,7 +2,7 @@
   Layout = "_Layout";
 }
 
-@using ToDoList.Models;
+@* @using ToDoList.Models; *@
 @model List<ToDoList.Models.Item>;
 
 <h1>Items</h1>
@@ -16,21 +16,11 @@
 <ul>
   @for(int i = 0; i < Model.Count; i++)
   {
-
     <li>
         @Html.HiddenFor(x => x[i].ItemId)
         @Html.HiddenFor(x => x[i].Description)
         @Html.CheckBoxFor(x => x[i].Completed)
         @Html.ActionLink($"{Model[i].Description}", "Details", new { id = Model[i].ItemId })
-                
-        @* @Html.CheckBoxFor(x => Model[i].Completed)
-        @Html.Hidden("ItemId", $"{Model[i].ItemId}")
-        @Html.Label("Description", $"{Model[i].Description}")
-        @Html.ActionLink($"{Model[i].Description}", "Details", new { id = Model[i].ItemId }) 
-
-        @Html.CheckBoxFor($"{Model[i].Completed}")
-        @Html.Label($"{Model[i].ItemId}")
-        @Html.ActionLink($"{Model[i].Description}", "Details", new { id = Model[i].ItemId }) *@
     </li>
   }
 </ul>

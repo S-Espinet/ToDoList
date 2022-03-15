@@ -26,24 +26,13 @@ namespace ToDoList.Controllers
     [HttpPost]
     public ActionResult Index (List<Item> myItems)
     {
-      Console.WriteLine("Hello");
-      Console.WriteLine("myItems count: {0}", myItems.Count);
       foreach(var newItem in myItems)
       {
-        Console.WriteLine("newItem ItemId: {0}", newItem.ItemId);
-        Console.WriteLine("newItem Completed: {0}", newItem.Completed);
         var dbItemMatch =_db.Items.FirstOrDefault(dbItem => dbItem.ItemId == newItem.ItemId);
         if(dbItemMatch != null)
         {
-          Console.WriteLine("dbItemMatch ItemId: {0}", dbItemMatch.ItemId);
-          //_db.Items.Attach(dbItemMatch);
-          dbItemMatch.Completed = newItem.Completed;
-          //_db.Entry(dbItemMatch).State = EntityState.Modified;  
+          dbItemMatch.Completed = newItem.Completed; 
         }    
-        else
-        {
-          Console.WriteLine("No match");
-        }
       }
       _db.SaveChanges();
       return RedirectToAction("Index");
