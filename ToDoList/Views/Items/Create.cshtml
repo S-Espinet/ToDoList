@@ -14,7 +14,7 @@
   @Html.TextBoxFor(model => model.DueDate, new { type = "date" })
   <br />
   @Html.Label("Select category")
-  @Html.DropDownList("CategoryId")
+  @Html.DropDownList("CategoryId", "")
   <input type="submit" value="Add new task" class="btn btn-default" />
 }
 <p>@Html.ActionLink("Show all items", "Index")</p>
