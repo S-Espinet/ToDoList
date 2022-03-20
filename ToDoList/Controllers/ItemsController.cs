@@ -1,26 +1,35 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Security.Claims;
 using ToDoList.Models;
 
 namespace ToDoList.Controllers
 {
+  [Authorize] //Authorize allows access to the items controller only if the user is logged in (add authorize to other controllers if we want to limit access). You can put authorize on specific routes, leaving the other ones accessible, or we can leave Authorize here on the whole document and put [AllowAnonymous] on routes we want the user to have access to
   public class ItemsController : Controller
   {
     private readonly ToDoListContext _db;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public ItemsController(ToDoListContext db)
+    public ItemsController(UserManager<ApplicationUser> userManager, ToDoListContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
 
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
       ViewBag.PageTitle = "View All Items";
-      return View(_db.Items.OrderBy(item => item.DueDate.Day).ToList());
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      var userItems = _db.Items.Where(entry => entry.User.Id == currentUser.Id).ToList();
+      return View(userItems.OrderBy(item => item.DueDate.Day));
     }
 
     [HttpPost]
@@ -45,8 +54,11 @@ namespace ToDoList.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Item item, int CategoryId)
+    public async Task<ActionResult> Create(Item item, int CategoryId)
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      item.User = currentUser;
       _db.Items.Add(item);
       _db.SaveChanges();
       if (CategoryId != 0)
